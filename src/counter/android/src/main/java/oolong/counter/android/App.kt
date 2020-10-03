@@ -3,6 +3,7 @@ package oolong.counter.android
 import android.app.Application
 import android.content.Context
 import oolong.Dispatch
+import oolong.counter.android.data.CounterService
 import oolong.counter.android.oolong.RenderDelegate
 import oolong.counter.app.Counter.Msg
 import oolong.counter.app.Counter.Props
@@ -15,11 +16,13 @@ class App : Application() {
 
     private val renderDelegate = RenderDelegate<Msg, Props>()
 
+    private val counterService by lazy { CounterService(this) }
+
     override fun onCreate() {
         super.onCreate()
         runtime(
-            init,
-            update,
+            init(counterService.getCount),
+            update(counterService.putCount),
             view,
             renderDelegate.render
         )
