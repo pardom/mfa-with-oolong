@@ -5,11 +5,11 @@ import android.content.Context
 import oolong.Dispatch
 import oolong.counter.android.data.CounterService
 import oolong.counter.android.oolong.RenderDelegate
-import oolong.counter.app.Counter.Msg
-import oolong.counter.app.Counter.Props
-import oolong.counter.app.Counter.init
-import oolong.counter.app.Counter.update
-import oolong.counter.app.Counter.view
+import oolong.counter.app.Counters.Msg
+import oolong.counter.app.Counters.Props
+import oolong.counter.app.Counters.init
+import oolong.counter.app.Counters.update
+import oolong.counter.app.Counters.view
 import oolong.runtime
 
 class App : Application() {
@@ -21,8 +21,13 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         runtime(
-            init(counterService.getCount),
-            update(counterService.putCount),
+            init(
+                counterService.getCounts
+            ),
+            update(
+                counterService.getCounts,
+                counterService.putCounts
+            ),
             view,
             renderDelegate.render
         )
